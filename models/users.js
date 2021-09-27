@@ -27,12 +27,27 @@ var Users = new Schema({
   modified: {
     type: Date,
     default: Date.now
+  },
+  hash: {
+    type: String,
+    required: [
+      true, 
+      'There was a problem creating your password'
+    ]
+  },
+  salt: {
+    type: String,
+    required: [
+      true, 
+      'There was a problem creating your password'
+    ]
   }
-});Users.pre('save', function(next){
+});
+
+Users.pre('save', function(next){
   this.modified = new Date().toISOString();
   next();
 });
-
 
 //Add unique validation properties to the model
 Users.plugin(uniqueValidator);
