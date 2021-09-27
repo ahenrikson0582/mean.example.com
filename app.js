@@ -6,12 +6,13 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var apiUsersRouter = require('./routes/api/users');
 var config = require('./config.dev');
 
 var mongoose = require('mongoose');
-
-var app = express();
 mongoose.connect(config.mongodb, {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
+var app = express();
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -29,7 +30,7 @@ app.use('/users', usersRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
-
+app.use('/api/users', apiUsersRouter);
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
