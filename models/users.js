@@ -32,7 +32,7 @@ var Users = new Schema({
   hash: {
     type: String,
     required: [
-      true, 
+      true,   
       'There was a problem creating your password'
     ]
   },
@@ -44,7 +44,6 @@ var Users = new Schema({
     ]
   }
 });
-
 Users.pre('save', function(next){
   this.modified = new Date().toISOString();
   next();
@@ -53,4 +52,5 @@ Users.pre('save', function(next){
 //Add unique validation properties to the model
 Users.plugin(uniqueValidator);
 Users.plugin(passportLocalMongoose);
+
 module.exports  = mongoose.model('Users', Users);
